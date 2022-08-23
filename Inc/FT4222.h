@@ -5,6 +5,7 @@ int FT4222_init(void);
 int FT4222_unint_and_close(void);
 int FT4222_i2c_read(uint8_t, uint8_t, uint8_t *, uint16_t);
 int FT4222_i2c_write(uint8_t, uint8_t, uint8_t *, uint16_t);
+int FT4222_spi_get_rxSize(uint16 *);
 
 
 

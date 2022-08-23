@@ -79,13 +79,27 @@ static int FT4222_i2c_init(void) {
     return FT_OK;
 }
 
+static int FT4222_spi_init(void) {    
+    printf("\n\n");
+    printf("Init FT4222 as SPI slave\n");
+    FT_STATUS ftStatus;
+    ftStatus = FT4222_SPISlave_InitEx(ftHandle, SPI_SLAVE_NO_PROTOCOL);
+    if (FT_OK != ftStatus) {
+        printf("Init FT4222 as SPI slave device failed!\n");
+        return ftStatus;
+    }
+    return FT4222_SPISlave_SetMode(ftHandle, CLK_IDLE_HIGH, CLK_TRAILING);
+}
+
+/****************************************************************************************/
+
 int FT4222_init(void) {
     int ret;
 
     ret = FT4222_device_init();
     if (ret)
         return ret;
-    return FT4222_i2c_init();
+    return FT4222_spi_init();
 }
 
 int FT4222_unint_and_close(void) {
@@ -125,4 +139,28 @@ int FT4222_i2c_write(uint8_t slaveAddr, uint8_t reg, uint8_t *data, uint16_t len
     }
 
 	return FT4222_I2CMaster_WriteEx(ftHandle, slaveAddr, STOP | STOP, data, len, &sizeTransferred);
+}
+
+int FT4222_spi_get_rxSize(uint16 *rxSize) {
+    uint16 size;
+    int ret;
+
+    size = 0;
+
+    ret = FT4222_SPISlave_GetRxStatus(ftHandle, &size);
+
+    if (ret)
+        return ret;
+    
+    *rxSize = size;
+
+    return FT_OK;
+}
+
+
+int FT4222_spi_read(char *pBuffer, uint16 len) {
+    uint16 sizeOfRead;
+
+    sizeOfRead = 0;
+    return FT4222_SPISlave_Read(ftHandle, (uint8_t *)pBuffer, len, &sizeOfRead);
 }
