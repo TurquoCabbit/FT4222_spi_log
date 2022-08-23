@@ -8,6 +8,7 @@
 #include <LibFT4222.h>
 
 #include <FT4222.h>
+#include <cwm_log.h>
 
 static FT_DEVICE_LIST_INFO_NODE g_FT4222Dev;
 static FT_HANDLE ftHandle = NULL;
@@ -44,48 +45,48 @@ static int ListFtUsbDevices(void) {
 static int FT4222_device_init(void) {
     
     if (ListFtUsbDevices()) {
-        printf("Device not found!\n");
+        CWM_OS_dbgPrintf("Device not found!\n");
         return FT_DEVICE_NOT_FOUND;
     }
 
-    printf("Open Device\n");
-    printf("  Flags= 0x%x, (%s), (%s)\n", g_FT4222Dev.Flags, (g_FT4222Dev.Flags & 0x01) ? "DEVICE_OPEN" : "DEVICE_CLOSE",\
+    CWM_OS_dbgPrintf("Open Device\n");
+    CWM_OS_dbgPrintf("  Flags= 0x%x, (%s), (%s)\n", g_FT4222Dev.Flags, (g_FT4222Dev.Flags & 0x01) ? "DEVICE_OPEN" : "DEVICE_CLOSE",\
                                                              (g_FT4222Dev.Flags & 0x02) ? "High-speed USB" : "Full-speed USB");
-    printf("  Type= 0x%x\n",        g_FT4222Dev.Type);
-    printf("  ID= 0x%x\n",          g_FT4222Dev.ID);
-    printf("  LocId= 0x%x\n",       g_FT4222Dev.LocId);
-    printf("  SerialNumber= %s\n",  g_FT4222Dev.SerialNumber);
-    printf("  Description= %s\n",   g_FT4222Dev.Description);
-    printf("  ftHandle= %#x\n",    g_FT4222Dev.ftHandle);
+    CWM_OS_dbgPrintf("  Type= 0x%x\n",        g_FT4222Dev.Type);
+    CWM_OS_dbgPrintf("  ID= 0x%x\n",          g_FT4222Dev.ID);
+    CWM_OS_dbgPrintf("  LocId= 0x%x\n",       g_FT4222Dev.LocId);
+    CWM_OS_dbgPrintf("  SerialNumber= %s\n",  g_FT4222Dev.SerialNumber);
+    CWM_OS_dbgPrintf("  Description= %s\n",   g_FT4222Dev.Description);
+    CWM_OS_dbgPrintf("  ftHandle= %#x\n",    g_FT4222Dev.ftHandle);
 
     FT_STATUS ftStatus;
     ftStatus = FT_OpenEx((PVOID)g_FT4222Dev.LocId, FT_OPEN_BY_LOCATION, &ftHandle);
     if (FT_OK != ftStatus) {
-        printf("Open a FT4222 device failed!\n");
+        CWM_OS_dbgPrintf("Open a FT4222 device failed!\n");
         return FT_DEVICE_NOT_OPENED;
     }
     return FT_OK;
 }
 
 static int FT4222_i2c_init(void) {    
-    printf("\n\n");
-    printf("Init FT4222 as I2C master\n");
+    CWM_OS_dbgPrintf("\n\n");
+    CWM_OS_dbgPrintf("Init FT4222 as I2C master\n");
     FT_STATUS ftStatus;
     ftStatus = FT4222_I2CMaster_Init(ftHandle, 400);
     if (FT_OK != ftStatus) {
-        printf("Init FT4222 as I2C master device failed!\n");
+        CWM_OS_dbgPrintf("Init FT4222 as I2C master device failed!\n");
         return ftStatus;
     }
     return FT_OK;
 }
 
 static int FT4222_spi_init(void) {    
-    printf("\n\n");
-    printf("Init FT4222 as SPI slave\n");
+    CWM_OS_dbgPrintf("\n\n");
+    CWM_OS_dbgPrintf("Init FT4222 as SPI slave\n");
     FT_STATUS ftStatus;
     ftStatus = FT4222_SPISlave_InitEx(ftHandle, SPI_SLAVE_NO_PROTOCOL);
     if (FT_OK != ftStatus) {
-        printf("Init FT4222 as SPI slave device failed!\n");
+        CWM_OS_dbgPrintf("Init FT4222 as SPI slave device failed!\n");
         return ftStatus;
     }
     return FT4222_SPISlave_SetMode(ftHandle, CLK_IDLE_HIGH, CLK_TRAILING);
@@ -104,11 +105,11 @@ int FT4222_init(void) {
 
 int FT4222_unint_and_close(void) {
     int ret;
-    printf("UnInitialize FT4222\n");
+    CWM_OS_dbgPrintf("UnInitialize FT4222\n");
     ret = FT4222_UnInitialize(ftHandle);
     if (ret)
         return ret;
-    printf("Close FT device\n");
+    CWM_OS_dbgPrintf("Close FT device\n");
     return FT_Close(ftHandle);
 }
 
