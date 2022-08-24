@@ -1,2 +1,2 @@
-# FT4222 to Gsensor through I2C
-* with aml and dml
+# FT4222 spi slave
+* log spi data
