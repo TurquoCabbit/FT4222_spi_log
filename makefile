@@ -25,10 +25,6 @@ SRCS := $(wildcard Src/*.c)
 INC_DIRS := "Inc"
 INC_DIRS += "imports\ftd2xx"
 INC_DIRS += "imports\LibFT4222\inc"
-# INC_DIRS += "D:\Neil\Project\00_Releane_LIB\AML\Inc"
-# INC_DIRS += "D:/Neil/Project/driver_manager_lib/dml/inc"
-# INC_DIRS += "D:/Neil/Project/driver_manager_lib/project/franky/config/default"
-# INC_DIRS += "D:/Neil/Project/driver_manager_lib/project/franky/config"
 
 # Add a prefix to INC_DIRS. So moduleA would become -ImoduleA. GCC understands this -I flag
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
@@ -45,10 +41,9 @@ CFLAGS += -fdata-sections -ffunction-sections
 CC := gcc
 
 # Link libraries
-LIBS := -l:ftd2xx.lib -l:LibFT4222.lib #-l:CWM_LIB_wingcc32.a
+LIBS := -l:ftd2xx.lib -l:LibFT4222.lib
 LIB_DIRS += "imports\ftd2xx\i386"
-LIB_DIRS += "imports\LibFT4222\dll/i386"
-# LIB_DIRS += "D:\Neil\Project\00_Releane_LIB\win32\Lib"
+LIB_DIRS += "imports\LibFT4222\dll\i386"
 
 LDFLAGS += -m32
 LDFLAGS += $(addprefix -L,$(LIB_DIRS))
