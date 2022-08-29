@@ -14,21 +14,16 @@
 
 #include <cwm_log.h>
 
-#define log_file
-#define log_max_lenght 65536
+#define LOG_MAX_LENGHT 65536
 
-#ifdef log_file
 static const char *log_folder = "log";
 static const char *log_subName = ".log";
 static FILE *file;
-#endif
 
 int CWM_OS_dbgOutput(const char * format) {
     // printf("%s", format);
     
-#ifdef log_file
     fprintf(file, "%s", format);
-#endif
 
     return 0;
 }
@@ -37,7 +32,7 @@ int CWM_OS_dbgOutput_checkLog(const char * format)
 {
     static int s_sn = 0;
 
-    char InputBuff[log_max_lenght];
+    char InputBuff[LOG_MAX_LENGHT];
 
     sprintf(InputBuff, "#_#|%d|%s", s_sn, format);
     s_sn ++;
@@ -47,7 +42,7 @@ int CWM_OS_dbgOutput_checkLog(const char * format)
 
 int CWM_OS_dbgPrintf(const char * format,...)
 {
-    char InputBuff[log_max_lenght];
+    char InputBuff[LOG_MAX_LENGHT];
 
     va_list    args;
     va_start(args, format);
@@ -67,7 +62,6 @@ void cwm_log_init(void) {
     char date_time[32];
     char filename[64];    
 
-#ifdef log_file
 
     if (stat(log_folder, &info) != 0 || !(info.st_mode & S_IFDIR)) {
         mkdir(log_folder);
@@ -82,8 +76,7 @@ void cwm_log_init(void) {
     memset(filename, 0, sizeof(filename));
     sprintf(filename, "%s\\%s%s", log_folder, date_time, log_subName);
     
-    file = fopen(filename, "a");    
-#endif
+    file = fopen(filename, "a");
 }
 
 void cwm_log_close(void) {
