@@ -10,8 +10,6 @@ SRC_DIRS := Src
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. Make will incorrectly expand these otherwise.
 SRCS := $(wildcard Src/*.c)
-# SRCS += $(wildcard D:/Neil/Project/driver_manager_lib/dml/src/*.c)
-# SRCS += $(wildcard D:/Neil/Project/driver_manager_lib/dml/vendor/*/*.c)
 
 # String substitution for every C/C++ file.
 # As an example, hello.cpp turns into ./build/hello.cpp.o
