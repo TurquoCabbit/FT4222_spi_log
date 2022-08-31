@@ -19,6 +19,13 @@ mingw32-make -j8 all SHELL=cmd
 
 
 IF %ERRORLEVEL% EQU 0 (
+
+    mkdir %RELEASE_PATH%\msvc
+    copy %SCRIPT_PATH%..\imports\msvc\msvcp100.dll %RELEASE_PATH%\msvc\msvcp100.dll /y
+    copy %SCRIPT_PATH%..\imports\msvc\msvcr100.dll %RELEASE_PATH%\msvc\msvcr100.dll /y
+
+    echo "Copy msvcp100.dll and msvcr100.dll in msvc folder into C:\Windows\System32" >> %RELEASE_PATH%\readme.txt
+
     goto __EXIT_OK
 )
 
