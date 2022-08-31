@@ -8,14 +8,13 @@ path
 set SCRIPT_PATH=%~dp0
 set RELEASE_PATH=%SCRIPT_PATH%..\release
 set BUILD_PATH=%SCRIPT_PATH%..\_Build
-set OUT_PATH=%SCRIPT_PATH%..\release
 
 REM Remove binaries if any
 call :__CLEAN
 
 @REM mingw32-make clean SHELL=cmd
 
-mingw32-make -j8 all SHELL=cmd
+mingw32-make all SHELL=cmd
 
 
 IF %ERRORLEVEL% EQU 0 (
@@ -61,10 +60,6 @@ if exist %RELEASE_PATH% (
 
 if exist %BUILD_PATH% (
     rd /s/q %BUILD_PATH%
-)
-
-if exist %OUT_PATH% (
-    rd /s/q %OUT_PATH%
 )
 
 endlocal
