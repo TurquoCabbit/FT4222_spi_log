@@ -8,7 +8,7 @@ path
 set SCRIPT_PATH=%~dp0
 set RELEASE_PATH=%SCRIPT_PATH%..\release
 set BUILD_PATH=%SCRIPT_PATH%..\_Build
-set OUT_PATH=%SCRIPT_PATH%..\_Out
+set OUT_PATH=%SCRIPT_PATH%..\release
 
 REM Remove binaries if any
 call :__CLEAN
@@ -19,13 +19,6 @@ mingw32-make -j8 all SHELL=cmd
 
 
 IF %ERRORLEVEL% EQU 0 (
-    if not exist %RELEASE_PATH% (
-        mkdir %RELEASE_PATH%
-    )
-
-    copy %OUT_PATH%\FT4222.exe %RELEASE_PATH%\ft4222_spiLog.exe
-    copy %OUT_PATH%\LibFT4222.dll %RELEASE_PATH%\LibFT4222.dll
-    
     goto __EXIT_OK
 )
 

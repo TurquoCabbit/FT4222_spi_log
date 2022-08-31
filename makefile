@@ -3,7 +3,7 @@ TARGET_EXEC := FT4222.exe
 
 BUILD_DIR := _Build
 
-OUT_DIR := _Out
+OUT_DIR := release
 
 SRC_DIRS := Src
 
