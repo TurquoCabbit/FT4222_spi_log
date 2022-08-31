@@ -1,0 +1,18 @@
+stages:
+  - build
+  - release
+
+nucleoF411_default:
+  stage: build
+  tags:
+    - windows
+    - nrf52832
+    - only_taipei
+  script:
+    - cmd /c script\build_release.bat
+  artifacts:
+     name: "Ft4222_spiLog"
+     expire_in: 1 weeks
+     paths:
+       - release
+
