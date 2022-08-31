@@ -14,7 +14,7 @@
 
 #include <cwm_log.h>
 
-#define LOG_MAX_LENGHT 65536
+#define LOG_MAX_LENGHT 255
 
 static const char *log_folder = "log";
 static const char *log_subName = ".log";
@@ -25,18 +25,6 @@ int CWM_OS_dbgOutput(const char * format) {
     
     fprintf(file, "%s", format);
 
-    return 0;
-}
-
-int CWM_OS_dbgOutput_checkLog(const char * format)
-{
-    static int s_sn = 0;
-
-    char InputBuff[LOG_MAX_LENGHT];
-
-    sprintf(InputBuff, "#_#|%d|%s", s_sn, format);
-    s_sn ++;
-    CWM_OS_dbgOutput(InputBuff);
     return 0;
 }
 

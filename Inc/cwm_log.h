@@ -11,7 +11,6 @@
 /* Includes ------------------------------------------------------------------*/
 
 int CWM_OS_dbgOutput(const char *);
-int CWM_OS_dbgOutput_checkLog(const char *);
 int CWM_OS_dbgPrintf(const char *,...);
 
 void cwm_log_init(void);

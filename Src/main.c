@@ -20,7 +20,7 @@ static void sig_handler(int);
 int main(int argc, char const *argv[]) {
     
     signal(SIGINT, sig_handler);
-    uint16 read_len;
+    uint16 read_len, sizeOfRead;
     char spi_rx_buffer[65536];
 
     cwm_log_init();
@@ -33,13 +33,13 @@ int main(int argc, char const *argv[]) {
     }
 
     for(;;) {
+        read_len = 0;
         FT4222_spi_get_rxSize(&read_len);
         if (read_len) {
-            FT4222_spi_read(spi_rx_buffer, read_len);
-            CWM_OS_dbgPrintf("%s", spi_rx_buffer);
+            FT4222_spi_read(spi_rx_buffer, read_len, &sizeOfRead);
+            CWM_OS_dbgOutput(spi_rx_buffer);
         }
-        read_len = 0;
-        memset(spi_rx_buffer, 0, sizeof(spi_rx_buffer));
+        memset(spi_rx_buffer, 0, sizeOfRead);
     }
 
     return 0;

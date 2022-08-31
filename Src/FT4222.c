@@ -159,9 +159,9 @@ int FT4222_spi_get_rxSize(uint16 *rxSize) {
 }
 
 
-int FT4222_spi_read(char *pBuffer, uint16 len) {
-    uint16 sizeOfRead;
+int FT4222_spi_read(char *pBuffer, uint16 len, uint16 *sizeOfRead) {
 
-    sizeOfRead = 0;
-    return FT4222_SPISlave_Read(ftHandle, (uint8_t *)pBuffer, len, &sizeOfRead);
+    *sizeOfRead = 0;
+    
+    return FT4222_SPISlave_Read(ftHandle, (uint8_t *)pBuffer, len, sizeOfRead);
 }
