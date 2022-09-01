@@ -2,7 +2,7 @@ stages:
   - build
   - release
 
-nucleoF411_default:
+Ft4222_spiLog_default:
   stage: build
   tags:
     - windows
