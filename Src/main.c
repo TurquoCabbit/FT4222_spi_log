@@ -22,6 +22,7 @@ int main(int argc, char const *argv[]) {
     signal(SIGINT, sig_handler);
     uint16 read_len, sizeOfRead;
     char spi_rx_buffer[65536];
+    memset(spi_rx_buffer, 0, sizeof(spi_rx_buffer));
 
     cwm_log_init();
 
@@ -38,8 +39,8 @@ int main(int argc, char const *argv[]) {
         if (read_len) {
             FT4222_spi_read(spi_rx_buffer, read_len, &sizeOfRead);
             CWM_OS_dbgOutput(spi_rx_buffer);
+            memset(spi_rx_buffer, 0, sizeOfRead);
         }
-        memset(spi_rx_buffer, 0, sizeOfRead);
     }
 
     return 0;
