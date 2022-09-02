@@ -46,6 +46,7 @@ static int FT4222_device_init(void) {
     
     if (ListFtUsbDevices()) {
         CWM_OS_dbgPrintf("Device not found!\n");
+        printf("Device not found!\n");
         return FT_DEVICE_NOT_FOUND;
     }
 
